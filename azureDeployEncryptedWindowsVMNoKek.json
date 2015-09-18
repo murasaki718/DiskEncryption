@@ -26,7 +26,7 @@
   "variables": {
 	"keyVaultName": "DiskEncryptionKeyVault",
 	"keyVaultResourceID": "/subscriptions/98a2d751-10a7-4f96-aea1-3aaa8a91ead1/resourceGroups/diskencryptiontst/providers/Microsoft.KeyVault/vaults/DiskEncryptionKeyVault",
-	"keyVaultSecretUrl":"https://diskencryptionkeyvault.vault.azure.net/secrets/BitLockerEncryptionTestWithKek/889cf55ed86b402a911f9061f62ecf8b",
+	"keyVaultSecretUrl":"https://diskencryptionkeyvault.vault.azure.net/secrets/BitLockerEncryptionKeyWithNoKek/5ce3ac9cd7d743deace188a60ebbdacf",
     "storageAccountName": "diskencryptiontst",
     "vhdContainerName": "devhd",
     "osDiskName": "[concat('osDisk',parameters('vmName'),'.vhd')]",
