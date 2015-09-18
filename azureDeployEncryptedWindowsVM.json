@@ -1,0 +1,132 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "vmName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the Virtual Machine"
+      }
+    },
+    "osType": {
+      "type": "string",
+	  "defaultValue": "Windows",
+      "metadata": {
+        "description": "OS product type"
+      }
+    }
+  },
+  "variables": {
+	"keyVaultName": "DiskEncryptionKeyVault",
+	"keyVaultResourceID": "/subscriptions/98a2d751-10a7-4f96-aea1-3aaa8a91ead1/resourceGroups/diskencryptiontst/providers/Microsoft.KeyVault/vaults/DiskEncryptionKeyVault",
+	"keyVaultSecretUrl":"https://diskencryptionkeyvault.vault.azure.net/secrets/BitLockerEncryptionTestWithKek/889cf55ed86b402a911f9061f62ecf8b",
+	"keyVaultKekUrl": "https://diskencryptionkeyvault.vault.azure.net/keys/DiskEncryption-Kek/9bab277dd9be400bb88a7df7a49d2431",
+    "storageAccountName": "diskencryptiontst",
+    "vhdContainerName": "devhd",
+    "osDiskName": "[concat('osDisk',parameters('vmName'),'.vhd')]",
+	"storageUri": "[concat('http://',variables('storageAccountName'),'.blob.core.windows.net')]",
+	"osVhdUri": "[concat(variables('storageUri'),'/',variables('vhdContainerName'),'/',parameters('vmName'),'.vhd')]",
+    "virtualNetworkName": "MyVNET",
+    "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
+    "subnetName": "Subnet",
+    "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
+    "dnsNameForPublicIP": "[toLower(parameters('vmName'))]",
+    "nicName": "[toLower(concat('nic',parameters('vmName')))]",
+    "publicIPAddressName": "[toLower(concat('publicIP',parameters('vmName')))]",
+    "publicIPAddressType": "Dynamic",
+    "location": "West Us",
+    "vmSize": "Standard_A2"
+  },
+  "resources": [
+    {
+      "apiVersion": "2015-06-15",
+      "type": "Microsoft.Network/publicIPAddresses",
+      "name": "[variables('publicIPAddressName')]",
+      "location": "[variables('location')]",
+      "properties": {
+        "publicIPAllocationMethod": "[variables('publicIPAddressType')]",
+        "dnsSettings": {
+          "domainNameLabel": "[variables('dnsNameForPublicIP')]"
+        }
+      }
+    },
+    {
+      "apiVersion": "2015-06-15",
+      "type": "Microsoft.Network/networkInterfaces",
+      "name": "[variables('nicName')]",
+      "location": "[variables('location')]",
+      "dependsOn": [
+        "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]"
+      ],
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "privateIPAllocationMethod": "Dynamic",
+              "publicIPAddress": {
+                "id": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]"
+              },
+              "subnet": {
+                "id": "[variables('subnetRef')]"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "apiVersion": "2015-06-15",
+      "type": "Microsoft.Compute/virtualMachines",
+      "name": "[parameters('vmName')]",
+      "location": "[variables('location')]",
+      "dependsOn": [
+        "[concat('Microsoft.Network/networkInterfaces/', variables('nicName'))]"
+      ],
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "[variables('vmSize')]"
+        },
+        "storageProfile": {
+          "osDisk": {
+            "name": "osdisk",
+            "osType": "[parameters('osType')]",
+            "vhd": {
+              "uri": "[variables('osVhdUri')]"
+            },
+            "caching": "ReadWrite",
+            "createOption": "Attach",
+            "encryptionSettings": {
+              "diskEncryptionKey": {
+                "sourceVault": {
+                  "id": "[variables('keyVaultResourceID')]"
+                },
+                "secretUrl": "[variables('keyVaultSecretUrl')]"
+              },
+              "keyEncryptionKey":
+              {
+                "sourceVault": {
+                  "id": "[variables('keyVaultResourceID')]"
+                },
+                "keyUrl": "[variables('keyVaultKekUrl')]"
+              }
+            }
+          }
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))]"
+            }
+          ]
+        },
+        "diagnosticsProfile": {
+          "bootDiagnostics": {
+            "enabled": "true",
+            "storageUri": "[variables('storageUri')]"
+          }
+        }
+      }
+    }
+  ]
+}
