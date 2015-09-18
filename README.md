@@ -4,6 +4,4 @@
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
-https://raw.githubusercontent.com/mahthi/DiskEncryption/master/README.md 
-
 This template creates an Encrypted VM on Azure
