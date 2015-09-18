@@ -6,7 +6,7 @@ Scenario 1: This template creates and deploys an Encrypted Windows VM on Azure! 
 </a>
 <br />
 
-Scenario 2: This template creates and deploys an Encrypted Windows VM on Azure! Bitlocker key is not encrypted with Kek.
+Scenario 2: This template creates and deploys an Encrypted Windows VM on Azure! Bitlocker key in clear (no Kek).
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Faravindthoram%2FDiskEncryption%2Fmaster%2FazureDeployEncryptedWindowsVMNoKek.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 <br>
