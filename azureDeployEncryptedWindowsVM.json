@@ -10,7 +10,7 @@
     },
     "osVhdUri": {
       "type": "string",
-      "defaultValue": "http://diskencryptiontst.blob.core.windows.net/devhd/windows10-encryptedvm5.vhd",
+      "defaultValue": "http://diskencryptiontst.blob.core.windows.net/devhd/win10Encrypted2.vhd",
       "metadata": {
         "description": "URI of OS vhd"
       }
