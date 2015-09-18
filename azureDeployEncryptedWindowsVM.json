@@ -8,6 +8,13 @@
         "description": "Name of the Virtual Machine"
       }
     },
+    "osVhdUri": {
+      "type": "string",
+      "defaultValue": "http://diskencryptiontst.blob.core.windows.net/devhd/windows10-encryptedvm5.vhd",
+      "metadata": {
+        "description": "URI of OS vhd"
+      }
+    },    
     "osType": {
       "type": "string",
 	  "defaultValue": "Windows",
@@ -24,8 +31,7 @@
     "storageAccountName": "diskencryptiontst",
     "vhdContainerName": "devhd",
     "osDiskName": "[concat('osDisk',parameters('vmName'),'.vhd')]",
-	"storageUri": "[concat('http://',variables('storageAccountName'),'.blob.core.windows.net')]",
-	"osVhdUri": "[concat(variables('storageUri'),'/',variables('vhdContainerName'),'/',parameters('vmName'),'.vhd')]",
+    "storageUri": "[concat('http://',variables('storageAccountName'),'.blob.core.windows.net')]",
     "virtualNetworkName": "MyVNET",
     "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
     "subnetName": "Subnet",
@@ -92,7 +98,7 @@
             "name": "osdisk",
             "osType": "[parameters('osType')]",
             "vhd": {
-              "uri": "[variables('osVhdUri')]"
+              "uri": "[parameters('osVhdUri')]"
             },
             "caching": "ReadWrite",
             "createOption": "Attach",
