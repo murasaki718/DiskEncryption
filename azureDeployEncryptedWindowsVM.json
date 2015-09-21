@@ -10,7 +10,7 @@
     },
     "osVhdUri": {
       "type": "string",
-      "defaultValue": "http://diskencryptiontst.blob.core.windows.net/devhd/win10Encrypted2.vhd",
+      "defaultValue": "http://diskencryptiontst.blob.core.windows.net/devhd/win2k12Encryptedvm1.vhd",
       "metadata": {
         "description": "URI of OS vhd"
       }
@@ -26,7 +26,7 @@
   "variables": {
 	"keyVaultName": "DiskEncryptionKeyVault",
 	"keyVaultResourceID": "/subscriptions/98a2d751-10a7-4f96-aea1-3aaa8a91ead1/resourceGroups/diskencryptiontst/providers/Microsoft.KeyVault/vaults/DiskEncryptionKeyVault",
-	"keyVaultSecretUrl":"https://diskencryptionkeyvault.vault.azure.net/secrets/BitLockerEncryptionTestWithKek/889cf55ed86b402a911f9061f62ecf8b",
+	"keyVaultSecretUrl":"https://diskencryptionkeyvault.vault.azure.net/secrets/2640EE52-41B3-426C-87B9-484232452CE4/4960923a368b4d3baa530b30978489e1",
 	"keyVaultKekUrl": "https://diskencryptionkeyvault.vault.azure.net/keys/DiskEncryption-Kek/9bab277dd9be400bb88a7df7a49d2431",
     "storageAccountName": "diskencryptiontst",
     "vhdContainerName": "devhd",
