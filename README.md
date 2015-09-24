@@ -24,7 +24,6 @@ Scenario 4: This template creates and deploys an Encrypted Linux VM on Azure! Se
     <img src="http://azuredeploy.net/deploybutton.png"/>
 <br>
 </a>
-
 <br>
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Faravindthoram%2FDiskEncryption%2Fmaster%2FazureDeployEncryptWindowsRunningVm.json" target="_blank">
 Scenario 5: This template enables encryption on a running windows vm!
