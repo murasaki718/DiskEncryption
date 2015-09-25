@@ -10,7 +10,7 @@
         },
         "AADClientID": {
             "type": "string",
-            "defaultvalue": "b7b48143-6c58-4cd4-a9e0-0a15cbda0614",
+            "defaultValue": "b7b48143-6c58-4cd4-a9e0-0a15cbda0614",
             "metadata": {
                 "Description": "Client ID of AAD app which has permissions to KeyVault"
             }
@@ -23,21 +23,21 @@
         },
         "KeyVaultResourceID": {
             "type": "string",
-            "defaultvalue": "/subscriptions/98a2d751-10a7-4f96-aea1-3aaa8a91ead1/resourceGroups/diskencryptiontst/providers/Microsoft.KeyVault/vaults/DiskEncryptionKeyVault",
+            "defaultValue": "/subscriptions/98a2d751-10a7-4f96-aea1-3aaa8a91ead1/resourceGroups/diskencryptiontst/providers/Microsoft.KeyVault/vaults/DiskEncryptionKeyVault",
             "metadata": {
                 "Description": "ResourceID of the KeyVault to place the volume encryption key"
             }
         },
         "KeyVaultURL": {
             "type": "string",
-            "defaultvalue": "https://diskencryptionkeyvault.vault.azure.net/secrets",
+            "defaultValue": "https://diskencryptionkeyvault.vault.azure.net/secrets",
             "metadata": {
                 "Description": "URL of the KeyVault to place the volume encryption key"
             }
         },
         "KeyEncryptionKeyURL": {
             "type": "string",
-            "defaultvalue": "https://diskencryptionkeyvault.vault.azure.net/keys/DiskEncryption-Kek/9bab277dd9be400bb88a7df7a49d2431",
+            "defaultValue": "https://diskencryptionkeyvault.vault.azure.net/keys/DiskEncryption-Kek/9bab277dd9be400bb88a7df7a49d2431",
             "metadata": {
                 "Description": "URL of the KeyEncryptionKey used to encrypt the volume encryption key"
             }
