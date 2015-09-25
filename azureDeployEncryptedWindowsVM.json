@@ -4,7 +4,7 @@
   "parameters": {
     "vmName": {
       "type": "string",
-      "defaultValue": "AcDemoWinEncVm"
+      "defaultValue": "AcDemoWinEncVm",
       "metadata": {
         "description": "Name of the Virtual Machine"
       }
