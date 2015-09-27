@@ -4,12 +4,14 @@
   "parameters": {
     "vmName": {
       "type": "string",
+      "defaultValue": "win2k12-newvm",
       "metadata": {
         "description": "Name of the Virtual Machine"
       }
     },
     "adminUsername": {
       "type": "string",
+      "defaultValue": "rdtest",
       "metadata": {
         "description": "Username for the Virtual Machine."
       }
@@ -22,7 +24,7 @@
     },
     "AADClientID": {
       "type": "string",
-      "defaultvalue": "b7b48143-6c58-4cd4-a9e0-0a15cbda0614",
+      "defaultValue": "b7b48143-6c58-4cd4-a9e0-0a15cbda0614",
       "metadata": {
          "Description": "Client ID of AAD app which has permissions to KeyVault"
       }
@@ -35,21 +37,21 @@
     },
     "KeyVaultResourceID": {
       "type": "string",
-      "defaultvalue": "/subscriptions/98a2d751-10a7-4f96-aea1-3aaa8a91ead1/resourceGroups/diskencryptiontst/providers/Microsoft.KeyVault/vaults/DiskEncryptionKeyVault",
+      "defaultValue": "/subscriptions/98a2d751-10a7-4f96-aea1-3aaa8a91ead1/resourceGroups/diskencryptiontst/providers/Microsoft.KeyVault/vaults/DiskEncryptionKeyVault",
       "metadata": {
         "Description": "ResourceID of the KeyVault to place the volume encryption key"
       }
     },
     "KeyVaultURL": {
        "type": "string",
-       "defaultvalue": "https://diskencryptionkeyvault.vault.azure.net/secrets",
+       "defaultValue": "https://diskencryptionkeyvault.vault.azure.net/secrets",
        "metadata": {
           "Description": "URL of the KeyVault to place the volume encryption key"
        }
     },
     "KeyEncryptionKeyURL": {
        "type": "string",
-       "defaultvalue": "https://diskencryptionkeyvault.vault.azure.net/keys/DiskEncryption-Kek/9bab277dd9be400bb88a7df7a49d2431",
+       "defaultValue": "https://diskencryptionkeyvault.vault.azure.net/keys/DiskEncryption-Kek/9bab277dd9be400bb88a7df7a49d2431",
        "metadata": {
           "Description": "URL of the KeyEncryptionKey used to encrypt the volume encryption key"
         }
@@ -63,7 +65,7 @@
     },
     "VolumeType": {
        "type": "string",
-	   "defaultValue": "All",
+       "defaultValue": "All",
        "metadata": {
           "Description": "Type of the volume OS or Data to perform encryption operation"
        }
@@ -72,21 +74,21 @@
   "variables": {
     "imagePublisher": "AzureRT.PIRCore.TestWAStage",
     "imageOffer": "TestWindowsServer2012",
-	"storageAccountName": "diskencryptiontst",
+    "storageAccountName": "diskencryptiontst",
     "vhdContainerName": "devhd",
-	"storageUri": "[concat('http://',variables('storageAccountName'),'.blob.core.windows.net')]",
+    "storageUri": "[concat('http://',variables('storageAccountName'),'.blob.core.windows.net')]",
     "virtualNetworkName": "MyVNET",
     "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
     "subnetName": "Subnet",  
     "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
     "dnsNameForPublicIP": "[toLower(parameters('vmName'))]",
-	"nicName": "[toLower(concat('nic',parameters('vmName')))]",
+    "nicName": "[toLower(concat('nic',parameters('vmName')))]",
     "publicIPAddressName": "[toLower(concat('publicIP',parameters('vmName')))]",
     "publicIPAddressType": "Dynamic",
     "location": "West Us",
     "vmSize": "Standard_A2",
-	"extensionName": "ADETestExtension",
-	"extensionVersion": "1.2",
+    "extensionName": "ADETestExtension",
+    "extensionVersion": "1.2",
     "encryptionOperation": "EnableEncryption"
   },
   "resources": [
@@ -203,7 +205,7 @@
 	       }
        }
     },
-	{
+    {
       "type": "Microsoft.Compute/virtualMachines/storageProfile",
       "name": "parameters('vmName')",
       "apiVersion": "2015-06-15",
