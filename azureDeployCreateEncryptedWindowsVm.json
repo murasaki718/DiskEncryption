@@ -207,7 +207,7 @@
     },
     {
       "type": "Microsoft.Compute/virtualMachines/storageProfile",
-      "name": "parameters('vmName')",
+      "name": "[concat(parameters('vmName'),'/StorageProfile')]",
       "apiVersion": "2015-06-15",
       "location": "[variables('location')]",
       "dependsOn": [
