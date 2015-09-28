@@ -211,24 +211,27 @@
       "apiVersion": "2015-06-15",
       "location": "[variables('location')]",
       "dependsOn": [
-        "[concat('Microsoft.Compute/virtualMachines/extensions/', parameters('vmName'),'/', variables('extensionName'))]"
+         "[resourceId('Microsoft.Compute/virtualMachines/extensions',  parameters('vmName'), variables('extensionName'))]"
       ],
-      "osDisk": {
-        "encryptionSettings": {
-		   "diskEncryptionKey": {
-              "sourceVault": {
-                 "id": "[parameters('KeyVaultResourceID')]"
-              },
-              "secretUrl": "[reference(resourceId('Microsoft.Compute/virtualMachines/extensions',  parameters('vmName'), variables('extensionName'))).instanceView.statuses[0].message]"
-           },
-           "keyEncryptionKey": {
-              "sourceVault": {
-                 "id": "[parameters('KeyVaultResourceID')]"
-              },
-              "keyUrl": "[parameters('KeyEncryptionKeyURL')]"
-           }          
-        }
+	  "properties": {
+	     "osDisk": {
+           "encryptionSettings": {
+		        "diskEncryptionKey": {
+                    "sourceVault": {
+                       "id": "[parameters('KeyVaultResourceID')]"
+                    },
+                    "secretUrl": "[reference(resourceId('Microsoft.Compute/virtualMachines/extensions',  parameters('vmName'), variables('extensionName'))).instanceView.statuses[0].message]"
+                },
+                "keyEncryptionKey": {
+                    "sourceVault": {
+                       "id": "[parameters('KeyVaultResourceID')]"
+                    },
+                    "keyUrl": "[parameters('KeyEncryptionKeyURL')]"
+                }          
+            }
+		 }
       }
+ 
     }
   ],
   "outputs": {
