@@ -138,7 +138,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/aravindthoram/DiskEncryption/master/EnableEncryptionOnRunningWindowsVm.json",
+                    "uri": "https://raw.githubusercontent.com/aravindthoram/DiskEncryption/master/EnableEncryptionOnRunningWindowsVM.json",
                     "contentVersion": "1.0.0.0"
                 },
       	        "parameters": {
