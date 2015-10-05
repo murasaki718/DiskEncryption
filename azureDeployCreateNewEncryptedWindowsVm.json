@@ -1,0 +1,174 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vmName": {
+            "type": "string",
+            "metadata": {
+                "Description": "Name of the virtual machine"
+            }
+        },
+        "AADClientSecret": {
+            "type": "string",
+            "metadata": {
+                "Description": "AADClientSecret"
+            }
+        }
+    },
+    "variables": {
+        "AADClientID":"97f847ef-9e1e-4c7c-9ae7-1c0f7c78f761",
+        "KeyVaultResourceID":"/subscriptions/98a2d751-10a7-4f96-aea1-3aaa8a91ead1/resourceGroups/sureddrg/providers/Microsoft.KeyVault/vaults/sureddcrptipvault",
+        "KeyVaultURL":"https://sureddcrptipvault.vault.azure.net/",
+        "KeyEncryptionKeyURL":"https://sureddcrptipvault.vault.azure.net/keys/TestKey/537e791bd5f445fb9c35baa70e917d4d",
+        "KeyEncryptionAlgorithm":"RSA-OAEP",
+        "VolumeType":"All",
+        "extensionName": "ADETestExtension",
+        "extensionVersion":"1.2",
+        "encryptionOperation":"EnableEncryption",
+        "vmSize": "Standard_A2",
+        "adminUsername": "rdtest",
+        "adminPassword": "rdPa$$w0rd",
+        "location": "westus",
+        "osSku": "R2",
+        "imagePublisher": "AzureRT.PIRCore.TestWAStage",
+        "imageOffer": "TestWindowsServer2012",
+        "osVersion":"latest",
+        "storageAccountName": "sureddcrptipstore",
+        "osDiskName": "[toLower(concat('osDisk',parameters('vmName')))]",
+        "vmStorageAccountContainerName": "vhds",
+        "virtualNetworkName": "MyVNET",
+        "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
+        "subnetName": "Subnet",
+        "addressPrefix": "10.0.0.0/16",
+        "subnetPrefix": "10.0.0.0/24", 
+        "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
+        "dnsNameForPublicIP": "[toLower(parameters('vmName'))]",
+        "nicName": "[toLower(concat('nic',parameters('vmName')))]",
+        "publicIPAddressName": "[toLower(concat('publicIP',parameters('vmName')))]",
+        "publicIPAddressType": "Dynamic"
+    },
+
+    "resources": [
+        {
+            "apiVersion": "2015-06-15",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "name": "[variables('publicIPAddressName')]",
+            "location": "[variables('location')]",
+            "properties": {
+                "publicIPAllocationMethod": "[variables('publicIPAddressType')]",
+                "dnsSettings": {
+                    "domainNameLabel": "[variables('dnsNameForPublicIP')]"
+                }
+            }
+        },
+        {
+            "apiVersion": "2015-06-15",
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "[variables('nicName')]",
+            "location": "[variables('location')]",
+            "dependsOn": [
+                "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]"
+            ],
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]"
+                            },
+                            "subnet": {
+                                "id": "[variables('subnetRef')]"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "apiVersion": "2015-06-15",
+            "type": "Microsoft.Compute/virtualMachines",
+            "name": "[parameters('vmName')]",
+            "location": "[variables('location')]",
+            "dependsOn": [
+                "[concat('Microsoft.Network/networkInterfaces/', variables('nicName'))]"
+            ],
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "[variables('vmSize')]"
+                },
+                "osProfile": {
+                    "computername": "[parameters('vmName')]",
+                    "adminUsername": "[variables('adminUsername')]",
+                    "adminPassword": "[variables('adminPassword')]"
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "[variables('imagePublisher')]",
+                        "offer": "[variables('imageOffer')]",
+                        "sku" : "[variables('osSku')]",
+                        "version":"[variables('osVersion')]"
+                    },
+                   "osDisk" : {
+                        "name": "[variables('osDiskName')]",
+                        "vhd": {
+                            "uri": "[concat('http://',variables('storageAccountName'),'.blob.core.windows.net/',variables('vmStorageAccountContainerName'),'/',variables('osDiskName'),'.vhd')]"
+                        },
+                        "caching": "ReadWrite",
+                        "createOption": "FromImage"
+                    }
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))]"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "name": "UpdateEncryptionSettings",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2015-01-01",
+            "dependsOn": [
+                "[concat('Microsoft.Compute/virtualMachines/', parameters('vmName'))]"
+            ],			
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/aravindthoram/DiskEncryption/master/azureDeployEnableEncryptionOnRunningWindowsVM.json",
+                    "contentVersion": "1.0.0.0"
+                },
+      	        "parameters": {
+                    "vmName": {
+                    	"value": "[parameters('vmName')]"
+                    },
+                    "AADClientID": {
+                    	"value": "[variables('AADClientID')]"
+                    },
+                    "AADClientSecret": {
+                    	"value": "[parameters('AADClientSecret')]"
+                    },   
+                    "KeyVaultResourceID": {
+	                    "value": "[variables('KeyVaultResourceID')]"
+                    },    
+                    "KeyVaultURL": {
+	                    "value": "[variables('KeyVaultURL')]"
+                    },   
+                    "KeyEncryptionKeyURL": {
+	                    "value": "[variables('KeyEncryptionKeyURL')]"
+                    },                    
+                    "location": {
+	                    "value": "[variables('location')]"
+                    },
+                    "osDiskName": {
+                    	"value": "[variables('osDiskName')]"
+                    }
+		}
+            }   
+	}
+	]		
+}
+
