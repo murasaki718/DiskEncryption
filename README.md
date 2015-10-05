@@ -30,6 +30,7 @@ Scenario 5: This template enables encryption on a running windows vm!
 <br>
     <img src="http://azuredeploy.net/deploybutton.png"/>
 <br>
+<br>
 </a>
 <br>
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Faravindthoram%2FDiskEncryption%2Fmaster%2FazureDeployCreateNewEncryptedWindowsVm.json" target="_blank">
