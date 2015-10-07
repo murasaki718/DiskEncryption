@@ -1,14 +1,18 @@
 # Create Encrypted VM's on Azure
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Faravindthoram%2FDiskEncryption%2Fmaster%2FazureDeployEncryptedWindowsVM.json" target="_blank">
-Scenario 1: This template creates and deploys an Encrypted Windows or Linux VM on Azure! Bitlocker key is encrypted with Kek.
+Scenario 1: This template creates and deploys an Encrypted Windows or Linux VM on Azure! 
+<br>
+Bitlocker key is encrypted with Kek.
 <br>
 <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 <br />
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Faravindthoram%2FDiskEncryption%2Fmaster%2FazureDeployEncryptedWindowsVMNoKek.json" target="_blank">
-Scenario 2: This template creates and deploys an Encrypted Windows or Linux VM on Azure! Bitlocker key in clear (no Kek).
+Scenario 2: This template creates and deploys an Encrypted Windows or Linux VM on Azure! 
+<br>
+Bitlocker key in clear (no Kek).
 <br>
 <img src="http://azuredeploy.net/deploybutton.png"/>
 <br>
