@@ -4,30 +4,20 @@
     "parameters": {
         "vmName": {
             "type": "string",
-            "defaultValue": "AcDemoWinEncryptedNoKekVm1",
             "metadata": {
                 "description": "Name of the Virtual Machine"
             }
         },
         "storageAccountName": {
             "type": "string",
-            "defaultValue": "diskencryptiontestaus",
             "metadata": {
-                "description": "Storage accout name"
-            }
-        },
-        "vhdContainerName": {
-            "type": "string",
-            "defaultValue": "vhds",
-            "metadata": {
-                "description": "Vhd container name"
+                "description": "Storage account name"
             }
         },
         "osVhdUri": {
             "type": "string",
-            "defaultValue": "https://diskencryptiontestaus.blob.core.windows.net/vhds/win2k12Encryptedvm3.vhd",
             "metadata": {
-                "description": "URI of OS vhd"
+                "description": "URI of OS vhd. Ex: https://diskencryptiontestaus.blob.core.windows.net/vhds/win2k12Encryptedvm3.vhd"
             }
         },
         "osType": {
@@ -43,30 +33,14 @@
         },
         "virtualNetworkName": {
             "type": "string",
-            "defaultValue": "diskencryptionvnet",
             "metadata": {
                 "description": "Virtual network name"
             }
         },
         "subnetName": {
             "type": "string",
-            "defaultValue": "Subnet",
             "metadata": {
                 "description": "Subnet name"
-            }
-        },
-        "location": {
-            "type": "string",
-            "defaultValue": "Australia East",
-            "allowedValues": [
-                "North Central US",
-                "South Central US",
-                "West US",
-                "Australia East",
-                "Australia Southeast"
-            ],
-            "metadata": {
-                "description": "URI of OS vhd"
             }
         },
         "vmSize": {
@@ -88,16 +62,14 @@
         },
         "keyVaultSecretUrl": {
             "type": "string",
-            "defaultValue": "https://diskencryptiontestaus.vault.azure.net/secrets/BitLockerEncryptionSecretWithKek/e088818e865e48488cf363af16dea596",
             "metadata": {
-                "description": "KeyVault secret Url"
+                "description": "KeyVault secret Url. Ex: https://diskencryptiontestaus.vault.azure.net/secrets/BitLockerEncryptionSecretWithKek/e088818e865e48488cf363af16dea596"
             }
         },
         "keyVaultResourceID": {
             "type": "string",
-            "defaultValue": "/subscriptions/9135e259-1f76-4dbd-a5c8-bc4fcdf3cf1c/resourceGroups/DiskEncryptionTest/providers/Microsoft.KeyVault/vaults/DiskEncryptionTestAus",
             "metadata": {
-                "description": "KeyVault resource id"
+                "description": "KeyVault resource id. Ex: /subscriptions/9135e259-1f76-4dbd-a5c8-bc4fcdf3cf1c/resourceGroups/DiskEncryptionTest/providers/Microsoft.KeyVault/vaults/DiskEncryptionTestAus"
             }
         }
     },
@@ -115,7 +87,7 @@
             "apiVersion": "2015-06-15",
             "type": "Microsoft.Network/publicIPAddresses",
             "name": "[variables('publicIPAddressName')]",
-            "location": "[parameters('location')]",
+            "location": "[resourceGroup().location]",
             "properties": {
                 "publicIPAllocationMethod": "[variables('publicIPAddressType')]",
                 "dnsSettings": {
@@ -127,7 +99,7 @@
             "apiVersion": "2015-06-15",
             "type": "Microsoft.Network/networkInterfaces",
             "name": "[variables('nicName')]",
-            "location": "[parameters('location')]",
+            "location": "[resourceGroup().location]",
             "dependsOn": [
                 "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]"
             ],
@@ -152,7 +124,7 @@
             "apiVersion": "2015-06-15",
             "type": "Microsoft.Compute/virtualMachines",
             "name": "[parameters('vmName')]",
-            "location": "[parameters('location')]",
+            "location": "[resourceGroup().location]",
             "dependsOn": [
                 "[concat('Microsoft.Network/networkInterfaces/', variables('nicName'))]"
             ],

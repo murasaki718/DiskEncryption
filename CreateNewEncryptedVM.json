@@ -25,26 +25,26 @@
             "metadata": {
                 "Description": "storage account to store os vhd"
             }
-        },    
+        },
         "vmStorageContainerName": {
             "type": "string",
             "defaultValue": "vhds",
             "metadata": {
                 "Description": "Name of the storage account container to store os vhd"
             }
-        },    
+        },
         "virtualNetworkName": {
             "type": "string",
             "metadata": {
                 "Description": "Name of VNET to which the VM NIC belongs to"
             }
-        },   
+        },
         "subnetName": {
             "type": "string",
             "metadata": {
                 "Description": "Name of Subnet to which the VM NIC belongs to"
             }
-        },         
+        },
         "AADClientID": {
             "type": "string",
             "metadata": {
@@ -78,16 +78,16 @@
         }
     },
     "variables": {
-    	"vmSize": "Standard_D2",
-    	"imagePublisher": "MicrosoftWindowsServer",
-    	"imageOffer": "WindowsServer",
-    	"osSku": "2012-R2-Datacenter",
+        "vmSize": "Standard_D2",
+        "imagePublisher": "MicrosoftWindowsServer",
+        "imageOffer": "WindowsServer",
+        "osSku": "2012-R2-Datacenter",
         "osDiskName": "[toLower(concat('osDisk',parameters('vmName')))]",
         "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',parameters('virtualNetworkName'))]",
         "subnetRef": "[concat(variables('vnetID'),'/subnets/',parameters('subnetName'))]",
         "dnsNameForPublicIP": "[toLower(parameters('vmName'))]",
         "publicIPAddressName": "[toLower(concat('publicIP',parameters('vmName')))]",
-        "publicIPAddressType": "Dynamic", 
+        "publicIPAddressType": "Dynamic",
         "nicName": "[toLower(concat('nic',parameters('vmName')))]"
     },
 
@@ -150,10 +150,10 @@
                     "imageReference": {
                         "publisher": "[variables('imagePublisher')]",
                         "offer": "[variables('imageOffer')]",
-                        "sku" : "[variables('osSku')]",
-                        "version":"latest"
+                        "sku": "[variables('osSku')]",
+                        "version": "latest"
                     },
-                   "osDisk" : {
+                    "osDisk": {
                         "name": "[variables('osDiskName')]",
                         "vhd": {
                             "uri": "[concat('http://',parameters('storageAccountName'),'.blob.core.windows.net/',parameters('vmStorageContainerName'),'/',variables('osDiskName'),'.vhd')]"
@@ -177,38 +177,37 @@
             "apiVersion": "2015-01-01",
             "dependsOn": [
                 "[concat('Microsoft.Compute/virtualMachines/', parameters('vmName'))]"
-            ],			
+            ],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "https://raw.githubusercontent.com/SudhakaraReddyEvuri/DiskEncryption/master/EnableEncryptionOnRunningWindowsVM.json",
+                    "uri": "https://raw.githubusercontent.com/aravindthoram/DiskEncryption/master/EnableEncryptionOnRunningWindowsVM.json",
                     "contentVersion": "1.0.0.0"
                 },
-      	        "parameters": {
+                "parameters": {
                     "vmName": {
-                    	"value": "[parameters('vmName')]"
+                        "value": "[parameters('vmName')]"
                     },
                     "AADClientID": {
-                    	"value": "[parameters('AADClientID')]"
+                        "value": "[parameters('AADClientID')]"
                     },
                     "AADClientSecret": {
-                    	"value": "[parameters('AADClientSecret')]"
-                    },   
+                        "value": "[parameters('AADClientSecret')]"
+                    },
                     "KeyVaultResourceID": {
-	                "value": "[parameters('KeyVaultResourceID')]"
-                    },    
+                        "value": "[parameters('KeyVaultResourceID')]"
+                    },
                     "KeyVaultURL": {
-	                "value": "[parameters('KeyVaultURL')]"
-                    },   
+                        "value": "[parameters('KeyVaultURL')]"
+                    },
                     "KeyEncryptionKeyURL": {
-	                "value": "[parameters('KeyEncryptionKeyURL')]"
+                        "value": "[parameters('KeyEncryptionKeyURL')]"
                     },
                     "osDiskName": {
-                    	"value": "[variables('osDiskName')]"
+                        "value": "[variables('osDiskName')]"
                     }
-		}
-            }   
-	}
-    ]		
+                }
+            }
+        }
+    ]
 }
-

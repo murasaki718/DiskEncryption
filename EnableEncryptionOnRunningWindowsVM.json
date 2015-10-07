@@ -1,4 +1,4 @@
-{ 
+{
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
@@ -41,7 +41,12 @@
         },
         "VolumeType": {
             "type": "string",
-	    "defaultValue": "All",
+            "defaultValue": "All",
+            "allowedValues": [
+                "All",
+                "OS",
+                "Data"
+            ],
             "metadata": {
                 "Description": "Type of the volume OS or Data to perform encryption operation"
             }
@@ -54,71 +59,69 @@
         }
     },
     "variables": {
-      "extensionName": "ADETestExtension",
-      "extensionVersion": "1.2",
-      "encryptionOperation": "EnableEncryption",
-      "KeyEncryptionAlgorithm": "RSA-OAEP"
+        "extensionName": "ADETestExtension",
+        "extensionVersion": "1.2",
+        "encryptionOperation": "EnableEncryption",
+        "KeyEncryptionAlgorithm": "RSA-OAEP"
     },
     "resources": [
-     {
-          "type": "Microsoft.Compute/virtualMachines/extensions",
-          "name": "[concat(parameters('vmName'),'/', variables('extensionName'))]",
-          "apiVersion": "2015-06-15",
-          "location": "[resourceGroup().location]",
-          "properties": {
-              "publisher": "Microsoft.Azure.Security",
-              "type": "ADETest",
-              "typeHandlerVersion": "[variables('extensionVersion')]",
-              "settings": {
-                  "AADClientID": "[parameters('AADClientID')]",
-                  "KeyVaultURL": "[parameters('KeyVaultURL')]",
-                  "KeyEncryptionKeyURL": "[parameters('KeyEncryptionKeyURL')]",
-                  "KeyEncryptionAlgorithm": "[variables('KeyEncryptionAlgorithm')]",
-                  "VolumeType": "[parameters('VolumeType')]",
-                  "EncryptionOperation": "[variables('encryptionOperation')]"
-              },
-              "protectedSettings": {
-                  "AADClientSecret": "[parameters('AADClientSecret')]"
-	      }
-          }
-    },
-    {
-      "apiVersion": "2015-06-15",
-      "type": "Microsoft.Compute/virtualMachines",
-      "name": "[parameters('vmName')]",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[resourceId('Microsoft.Compute/virtualMachines/extensions',  parameters('vmName'), variables('extensionName'))]"
-      ],
-      "properties": {
-        "storageProfile": {
-          "osDisk": {
-            "name": "[parameters('osDiskName')]",
-            "encryptionSettings": {
-              "diskEncryptionKey": {
-                "sourceVault": {
-                  "id": "[parameters('KeyVaultResourceID')]"
+        {
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "name": "[concat(parameters('vmName'),'/', variables('extensionName'))]",
+            "apiVersion": "2015-06-15",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "publisher": "Microsoft.Azure.Security",
+                "type": "ADETest",
+                "typeHandlerVersion": "[variables('extensionVersion')]",
+                "settings": {
+                    "AADClientID": "[parameters('AADClientID')]",
+                    "KeyVaultURL": "[parameters('KeyVaultURL')]",
+                    "KeyEncryptionKeyURL": "[parameters('KeyEncryptionKeyURL')]",
+                    "KeyEncryptionAlgorithm": "[variables('KeyEncryptionAlgorithm')]",
+                    "VolumeType": "[parameters('VolumeType')]",
+                    "EncryptionOperation": "[variables('encryptionOperation')]"
                 },
-                "secretUrl": "[reference(resourceId('Microsoft.Compute/virtualMachines/extensions',  parameters('vmName'), variables('extensionName'))).instanceView.statuses[0].message]"
-              },
-              "keyEncryptionKey":
-              {
-                "sourceVault": {
-                  "id": "[parameters('KeyVaultResourceID')]"
-                },
-                "keyUrl": "[parameters('KeyEncryptionKeyURL')]"
-              }          
-           }
-          }
+                "protectedSettings": {
+                    "AADClientSecret": "[parameters('AADClientSecret')]"
+                }
+            }
+        },
+        {
+            "apiVersion": "2015-06-15",
+            "type": "Microsoft.Compute/virtualMachines",
+            "name": "[parameters('vmName')]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Compute/virtualMachines/extensions',  parameters('vmName'), variables('extensionName'))]"
+            ],
+            "properties": {
+                "storageProfile": {
+                    "osDisk": {
+                        "name": "[parameters('osDiskName')]",
+                        "encryptionSettings": {
+                            "diskEncryptionKey": {
+                                "sourceVault": {
+                                    "id": "[parameters('KeyVaultResourceID')]"
+                                },
+                                "secretUrl": "[reference(resourceId('Microsoft.Compute/virtualMachines/extensions',  parameters('vmName'), variables('extensionName'))).instanceView.statuses[0].message]"
+                            },
+                            "keyEncryptionKey": {
+                                "sourceVault": {
+                                    "id": "[parameters('KeyVaultResourceID')]"
+                                },
+                                "keyUrl": "[parameters('KeyEncryptionKeyURL')]"
+                            }
+                        }
+                    }
+                }
+            }
         }
-      }
-    }
     ],
-   "outputs": {
-     "BitLockerKey": {
-       "type": "string",
-       "value": "[reference(resourceId('Microsoft.Compute/virtualMachines/extensions',  parameters('vmName'), variables('extensionName'))).instanceView.statuses[0].message]"
-     }
-   }
+    "outputs": {
+        "BitLockerKey": {
+            "type": "string",
+            "value": "[reference(resourceId('Microsoft.Compute/virtualMachines/extensions',  parameters('vmName'), variables('extensionName'))).instanceView.statuses[0].message]"
+        }
+    }
 }
-
