@@ -19,6 +19,10 @@
     "osType": {
       "type": "string",
 	  "defaultValue": "Windows",
+	  "allowedValues": [ 
+          "Standard", 
+           "Premium" 
+       ], 
       "metadata": {
         "description": "OS product type"
       }
