@@ -33,6 +33,13 @@
                 "Description": "Name of the storage account container to store os vhd"
             }
         },
+        "vmSize": {
+            "type": "string",
+            "defaultValue": "Standard_D2",
+            "metadata": {
+                "Description": "Size of VM"
+            }
+        },
         "virtualNetworkName": {
             "type": "string",
             "metadata": {
@@ -78,7 +85,6 @@
         }
     },
     "variables": {
-        "vmSize": "Standard_D2",
         "imagePublisher": "MicrosoftWindowsServer",
         "imageOffer": "WindowsServer",
         "osSku": "2012-R2-Datacenter",
@@ -139,7 +145,7 @@
             ],
             "properties": {
                 "hardwareProfile": {
-                    "vmSize": "[variables('vmSize')]"
+                    "vmSize": "[parameters('vmSize')]"
                 },
                 "osProfile": {
                     "computername": "[parameters('vmName')]",
