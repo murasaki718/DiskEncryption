@@ -26,8 +26,8 @@ Scenario 3: This template enables encryption on a running windows vm!
 <br>
 </a>
 <br>
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Faravindthoram%2FDiskEncryption%2Fblob%2Fmaster%2FCreateNewEncryptedWindowsVM.json" target="_blank">
-Scenario 4: This template creates a new encrypted windows server 2k12R2 vm!
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Faravindthoram%2FDiskEncryption%2Fmaster%2FCreateNewEncryptedVM.json" target="_blank">
+Scenario 4: This template creates a new encrypted windows vm using the server 2k12 gallery image!
 <br>
     <img src="http://azuredeploy.net/deploybutton.png"/>
 <br>
