@@ -10,7 +10,6 @@
         },
         "AADClientID": {
             "type": "string",
-            "defaultValue":"97f847ef-9e1e-4c7c-9ae7-1c0f7c78f761",
             "metadata": {
                 "Description": "Client ID of AAD app which has permissions to KeyVault"
             }
@@ -23,30 +22,21 @@
         },
         "KeyVaultResourceID": {
             "type": "string",
-            "defaultValue": "/subscriptions/98a2d751-10a7-4f96-aea1-3aaa8a91ead1/resourceGroups/sureddrg/providers/Microsoft.KeyVault/vaults/sureddcrptipvault",
             "metadata": {
                 "Description": "ResourceID of the KeyVault to place the volume encryption key"
             }
         },
         "KeyVaultURL": {
             "type": "string",
-            "defaultValue":"https://sureddcrptipvault.vault.azure.net/",
             "metadata": {
                 "Description": "URL of the KeyVault to place the volume encryption key"
             }
         },
         "KeyEncryptionKeyURL": {
             "type": "string",
-            "defaultValue":"https://sureddcrptipvault.vault.azure.net/keys/TestKey/537e791bd5f445fb9c35baa70e917d4d", 
+            "defaultValue": "",
             "metadata": {
                 "Description": "URL of the KeyEncryptionKey used to encrypt the volume encryption key"
-            }
-        },
-        "KeyEncryptionAlgorithm": {
-            "type": "string",
-	    "defaultValue": "RSA-OAEP",
-            "metadata": {
-                "Description": "KeyEncryption Algorithm used to encrypt the volume encryption key"
             }
         },
         "VolumeType": {
@@ -56,27 +46,25 @@
                 "Description": "Type of the volume OS or Data to perform encryption operation"
             }
         },
-        "location": {
-        	"type": "string",
-        	"defaultValue": "West US"
-        },
         "osDiskName": {
-        	"type": "string",
-        	"defaultValue": "[toLower(concat('osDisk',parameters('vmName')))]",        	
+            "type": "string",
+            "metadata": {
+                "Description": "name of the OS disk on which encryption needs to be enabled"
+            }
         }
     },
     "variables": {
-	  "extensionName": "ADETestExtension",
-	  "extensionVersion": "1.2",
+      "extensionName": "ADETestExtension",
+      "extensionVersion": "1.2",
       "encryptionOperation": "EnableEncryption",
-      "vmSize":"Standard_A1"
+      "KeyEncryptionAlgorithm": "RSA-OAEP"
     },
     "resources": [
      {
           "type": "Microsoft.Compute/virtualMachines/extensions",
           "name": "[concat(parameters('vmName'),'/', variables('extensionName'))]",
           "apiVersion": "2015-06-15",
-          "location": "[parameters('location')]",
+          "location": "[resourceGroup().location]",
           "properties": {
               "publisher": "Microsoft.Azure.Security",
               "type": "ADETest",
@@ -85,27 +73,27 @@
                   "AADClientID": "[parameters('AADClientID')]",
                   "KeyVaultURL": "[parameters('KeyVaultURL')]",
                   "KeyEncryptionKeyURL": "[parameters('KeyEncryptionKeyURL')]",
-                  "KeyEncryptionAlgorithm": "[parameters('KeyEncryptionAlgorithm')]",
+                  "KeyEncryptionAlgorithm": "[variables('KeyEncryptionAlgorithm')]",
                   "VolumeType": "[parameters('VolumeType')]",
                   "EncryptionOperation": "[variables('encryptionOperation')]"
               },
-          	  "protectedSettings": {
+              "protectedSettings": {
                   "AADClientSecret": "[parameters('AADClientSecret')]"
-	          }
+	      }
           }
     },
     {
       "apiVersion": "2015-06-15",
       "type": "Microsoft.Compute/virtualMachines",
       "name": "[parameters('vmName')]",
-      "location": "[parameters('location')]",
+      "location": "[resourceGroup().location]",
       "dependsOn": [
         "[resourceId('Microsoft.Compute/virtualMachines/extensions',  parameters('vmName'), variables('extensionName'))]"
       ],
       "properties": {
         "storageProfile": {
           "osDisk": {
-		    "name": "[parameters('osDiskName')]",
+            "name": "[parameters('osDiskName')]",
             "encryptionSettings": {
               "diskEncryptionKey": {
                 "sourceVault": {
@@ -133,3 +121,4 @@
      }
    }
 }
+
