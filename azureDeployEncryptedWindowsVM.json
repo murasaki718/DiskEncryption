@@ -4,14 +4,14 @@
     "parameters": {
         "vmName": {
             "type": "string",
-            "defaultValue": "AcDemoWinEncVm",
+            "defaultValue": "AcDemoWinEncryptedVm1",
             "metadata": {
                 "description": "Name of the Virtual Machine"
             }
         },
         "storageAccountName": {
             "type": "string",
-            "defaultValue": "diskencryptiontest",
+            "defaultValue": "diskencryptiontestaus",
             "metadata": {
                 "description": "Storage accout name"
             }
@@ -25,7 +25,7 @@
         },
         "osVhdUri": {
             "type": "string",
-            "defaultValue": "http://diskencryptiontst.blob.core.windows.net/devhd/win2k12Encryptedvm1.vhd",
+            "defaultValue": "https://diskencryptiontestaus.blob.core.windows.net/vhds/win2k12Encryptedvm3.vhd",
             "metadata": {
                 "description": "URI of OS vhd"
             }
@@ -43,7 +43,7 @@
         },
         "virtualNetworkName": {
             "type": "string",
-            "defaultValue": "MyVNET",
+            "defaultValue": "diskencryptionvnet",
             "metadata": {
                 "description": "Virtual network name"
             }
@@ -109,20 +109,20 @@
         }
     },
     "variables": {
-        "storageUri": "[concat('http://',variables('storageAccountName'),'.blob.core.windows.net')]",
-        "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
-        "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
+        "storageUri": "[concat('http://',parameters('storageAccountName'),'.blob.core.windows.net')]",
+        "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',parameters('virtualNetworkName'))]",
+        "subnetRef": "[concat(variables('vnetID'),'/subnets/',parameters('subnetName'))]",
         "dnsNameForPublicIP": "[toLower(parameters('vmName'))]",
         "nicName": "[toLower(concat('nic',parameters('vmName')))]",
         "publicIPAddressName": "[toLower(concat('publicIP',parameters('vmName')))]",
-        "publicIPAddressType": "Dynamic",
+        "publicIPAddressType": "Dynamic"
     },
     "resources": [
         {
             "apiVersion": "2015-06-15",
             "type": "Microsoft.Network/publicIPAddresses",
             "name": "[variables('publicIPAddressName')]",
-            "location": "[variables('location')]",
+            "location": "[parameters('location')]",
             "properties": {
                 "publicIPAllocationMethod": "[variables('publicIPAddressType')]",
                 "dnsSettings": {
@@ -134,7 +134,7 @@
             "apiVersion": "2015-06-15",
             "type": "Microsoft.Network/networkInterfaces",
             "name": "[variables('nicName')]",
-            "location": "[variables('location')]",
+            "location": "[parameters('location')]",
             "dependsOn": [
                 "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]"
             ],
@@ -159,13 +159,13 @@
             "apiVersion": "2015-06-15",
             "type": "Microsoft.Compute/virtualMachines",
             "name": "[parameters('vmName')]",
-            "location": "[variables('location')]",
+            "location": "[parameters('location')]",
             "dependsOn": [
                 "[concat('Microsoft.Network/networkInterfaces/', variables('nicName'))]"
             ],
             "properties": {
                 "hardwareProfile": {
-                    "vmSize": "[variables('vmSize')]"
+                    "vmSize": "[parameters('vmSize')]"
                 },
                 "storageProfile": {
                     "osDisk": {
@@ -179,15 +179,15 @@
                         "encryptionSettings": {
                             "diskEncryptionKey": {
                                 "sourceVault": {
-                                    "id": "[variables('keyVaultResourceID')]"
+                                    "id": "[parameters('keyVaultResourceID')]"
                                 },
-                                "secretUrl": "[variables('keyVaultSecretUrl')]"
+                                "secretUrl": "[parameters('keyVaultSecretUrl')]"
                             },
                             "keyEncryptionKey": {
                                 "sourceVault": {
-                                    "id": "[variables('keyVaultResourceID')]"
+                                    "id": "[parameters('keyVaultResourceID')]"
                                 },
-                                "keyUrl": "[variables('keyVaultKekUrl')]"
+                                "keyUrl": "[parameters('keyVaultKekUrl')]"
                             }
                         }
                     }
