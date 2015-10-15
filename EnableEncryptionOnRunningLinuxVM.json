@@ -57,7 +57,7 @@
     }
   },
   "variables": {
-    "extensionName": "VMEncryptionPreview2",
+    "extensionName": "VMEncryptionPreview",
     "extensionVersion": "0.1",
     "encryptionOperation": "EnableEncryption",
     "KeyEncryptionAlgorithm": "RSA-OAEP"
@@ -70,7 +70,7 @@
       "location": "[resourceGroup().location]",
       "properties": {
         "publisher": "Microsoft.OSTCExtensions",
-        "type": "VMEncryptionPreview2",
+        "type": "VMEncryptionPreview",
         "typeHandlerVersion": "[variables('extensionVersion')]",
         "settings": {
           "AADClientID": "[parameters('AADClientID')]",
