@@ -1,5 +1,11 @@
 # Create Encrypted VM's on Azure
 
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Faravindthoram%2FDiskEncryption%2Fmaster%2FazureDeployPrereqs.json" target="_blank">
+Run this pre-requisite template if you are setting up storage account, vnet and subnet for the first time!
+<img src="http://azuredeploy.net/deploybutton.png"/>
+</a>
+<br />
+
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Faravindthoram%2FDiskEncryption%2Fmaster%2FazureDeployEncryptedWindowsVM.json" target="_blank">
 Scenario 1: This template creates and deploys an Encrypted Windows or Linux VM on Azure! 
 <br>
