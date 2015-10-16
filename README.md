@@ -82,3 +82,4 @@ Scenario 9: This template creates a new encrypted windows vm using the server 2k
 <br>
 </a>
 
+Microsoft Online Services Privacy statement - http://www.microsoft.com/privacystatement/en-us/OnlineServices/Default.aspx
