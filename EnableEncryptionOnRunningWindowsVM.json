@@ -54,7 +54,7 @@
         "osDiskName": {
             "type": "string",
             "metadata": {
-                "Description": "name of the OS disk on which encryption needs to be enabled"
+                "Description": "name of the OS disk. This MUST match the osDisk name in Get-AzureVm properties"
             }
         }
     },
