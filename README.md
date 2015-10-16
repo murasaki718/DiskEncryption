@@ -32,8 +32,35 @@ Scenario 3: This template enables encryption on a running linux vm!
 </a>
 
 <br>
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Faravindthoram%2FDiskEncryption%2Fmaster%2FEnableEncryptionOnRunningWindowsVM.json" target="_blank">
-Scenario 4: This template enables encryption on a running windows vm!
+
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Faravindthoram%2FDiskEncryption%2Fmaster%2FEnableEncryptionOnRunningWindowsVM-AADClientSecret.json" target="_blank">
+Scenario 4: This template enables encryption on a running windows vm using AAD client secret
+<br>
+    <img src="http://azuredeploy.net/deploybutton.png"/>
+<br>
+</a>
+
+<br>
+
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Faravindthoram%2FDiskEncryption%2Fmaster%2FEnableEncryptionOnRunningWindowsVM-AADClientSecret-WithKek.json" target="_blank">
+Scenario 5: This template enables encryption on a running windows vm using AAD client secret and KeyEncryptionKey
+<br>
+    <img src="http://azuredeploy.net/deploybutton.png"/>
+<br>
+</a>
+<br>
+
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Faravindthoram%2FDiskEncryption%2Fmaster%2FEnableEncryptionOnRunningWindowsVM-AADClientCert.json" target="_blank">
+Scenario 6: This template enables encryption on a running windows vm using AAD client cert thumbprint
+<br>
+    <img src="http://azuredeploy.net/deploybutton.png"/>
+<br>
+</a>
+
+<br>
+
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Faravindthoram%2FDiskEncryption%2Fmaster%2FEnableEncryptionOnRunningWindowsVM-AADClientCert-WithKek.json" target="_blank">
+Scenario 7: This template enables encryption on a running windows vm using AAD client cert thumbprint and KeyEncryptionKey
 <br>
     <img src="http://azuredeploy.net/deploybutton.png"/>
 <br>
@@ -41,10 +68,9 @@ Scenario 4: This template enables encryption on a running windows vm!
 
 <br>
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Faravindthoram%2FDiskEncryption%2Fmaster%2FCreateNewEncryptedVM.json" target="_blank">
-Scenario 5: This template creates a new encrypted windows vm using the server 2k12 gallery image!
+Scenario 8: This template creates a new encrypted windows vm using the server 2k12 gallery image!
 <br>
     <img src="http://azuredeploy.net/deploybutton.png"/>
 <br>
 </a>
 
-<br>
