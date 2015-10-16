@@ -68,7 +68,15 @@ Scenario 7: This template enables encryption on a running windows vm using AAD c
 
 <br>
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Faravindthoram%2FDiskEncryption%2Fmaster%2FCreateNewEncryptedWindowsVM-AADClientSecret.json" target="_blank">
-Scenario 8: This template creates a new encrypted windows vm using the server 2k12 gallery image! Using AAD client secret and KeyEncryptionKey
+Scenario 8: This template creates a new encrypted windows vm using the server 2k12 gallery image! Using AAD client secret
+<br>
+    <img src="http://azuredeploy.net/deploybutton.png"/>
+<br>
+</a>
+
+<br>
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Faravindthoram%2FDiskEncryption%2Fmaster%2FCreateNewEncryptedWindowsVM-AADClientSecret-WithKek.json" target="_blank">
+Scenario 9: This template creates a new encrypted windows vm using the server 2k12 gallery image! Using AAD client secret and KeyEncryptionKey
 <br>
     <img src="http://azuredeploy.net/deploybutton.png"/>
 <br>
