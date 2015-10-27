@@ -56,11 +56,18 @@
             "metadata": {
                 "Description": "name of the OS disk. This MUST match the osDisk name in Get-AzureVm properties"
             }
-        }
+        },
+        "sequenceVersion": {
+            "type": "string",
+            "defaultValue": "1",
+            "metadata": {
+                "Description": "sequence version of the bitlocker operation. Increment this everytime an operation is performed on the same VM"
+            }
+        } 
     },
     "variables": {
         "extensionName": "ADETestExtension",
-        "extensionVersion": "1.2",
+        "extensionVersion": "1.3",
         "encryptionOperation": "EnableEncryption",
         "KeyEncryptionAlgorithm": "RSA-OAEP"
     },
@@ -80,7 +87,8 @@
                     "KeyEncryptionKeyURL": "[parameters('KeyEncryptionKeyURL')]",
                     "KeyEncryptionAlgorithm": "[variables('KeyEncryptionAlgorithm')]",
                     "VolumeType": "[parameters('VolumeType')]",
-                    "EncryptionOperation": "[variables('encryptionOperation')]"
+                    "EncryptionOperation": "[variables('encryptionOperation')]",
+                    "SequenceVersion": "[parameters('sequenceVersion')]"
                 },
                 "protectedSettings": {
                     "AADClientSecret": "[parameters('AADClientSecret')]"
