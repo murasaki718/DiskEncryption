@@ -61,8 +61,8 @@
         }  
     },
     "variables": {
-      "extensionName": "ADETestExtension",
-      "extensionVersion": "1.3",
+      "extensionName": "AzureDiskEncryption",
+      "extensionVersion": "1.0",
       "encryptionOperation": "EnableEncryption",
       "KeyEncryptionAlgorithm": "RSA-OAEP"
     },
@@ -74,7 +74,7 @@
           "location": "[resourceGroup().location]",
           "properties": {
               "publisher": "Microsoft.Azure.Security",
-              "type": "ADETest",
+              "type": "AzureDiskEncryption",
               "typeHandlerVersion": "[variables('extensionVersion')]",
               "settings": {
                   "AADClientID": "[parameters('AADClientID')]",
