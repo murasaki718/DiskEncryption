@@ -42,7 +42,7 @@ Scenario 4: This template enables encryption on a running Linux vm using AAD cli
 <br>
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Faravindthoram%2FDiskEncryption%2Fmaster%2FEnableEncryptionOnRunningLinuxVM-Format-AADClientSecret.json" target="_blank">
-Scenario 5: This template enables encryption on a running Linux vm using AAD client secret, this will format the disk directly instead of encrypting the existed data. Parameter of the diskFormatQuery should be like this: [{"scsi":"6:0:0:1","name":"azuredisk"},{"scsi":"6:0:0:1","name":"azuredisk2"}] or [{"dev_path":"/dev/sdx","name":"azuredisk"}], the scsi means the disk scsi number, the name means the mount point name.
+Scenario 5: This template enables encryption on a running Linux vm using AAD client secret, this will format the disk directly instead of encrypting the existed data. Parameter of the diskFormatQuery should be like this: [{"scsi":"6:0:0:1","name":"azuredisk"},{"scsi":"6:0:0:1","name":"azuredisk2"}] or [{"dev_path":"/dev/sdx","name":"azuredisk"}], the scsi means the disk scsi number, the name means the mount point name.And you can specify the file system used for the device like this: [{"dev_path":"/dev/sdx","name":"azuredisk","file_system":"ext4"}]
 <br>
     <img src="http://azuredeploy.net/deploybutton.png"/>
 <br>
@@ -51,7 +51,7 @@ Scenario 5: This template enables encryption on a running Linux vm using AAD cli
 <br>
 
 <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Faravindthoram%2FDiskEncryption%2Fmaster%2FEnableEncryptionOnRunningLinuxVM-Format-AADClientSecret-WithKek.json" target="_blank">
-Scenario 6: This template enables encryption on a running Linux vm using AAD client secret and KeyEncryptionKey, this will format the disk directly instead of encrypting the existed data. Parameter of the diskFormatQuery should be like this: [{"scsi":"6:0:0:1","name":"azuredisk"},{"scsi":"6:0:0:1","name":"azuredisk2"}] or [{"dev_path":"/dev/sdx","name":"azuredisk"}], the scsi means the disk scsi number, the name means the mount point name.
+Scenario 6: This template enables encryption on a running Linux vm using AAD client secret and KeyEncryptionKey, this will format the disk directly instead of encrypting the existed data. Parameter of the diskFormatQuery should be like this: [{"scsi":"6:0:0:1","name":"azuredisk"},{"scsi":"6:0:0:1","name":"azuredisk2"}] or [{"dev_path":"/dev/sdx","name":"azuredisk"}], the scsi means the disk scsi number, the name means the mount point name. And you can specify the file system used for the device like this: [{"dev_path":"/dev/sdx","name":"azuredisk","file_system":"ext4"}]
 <br>
 <br>
     <img src="http://azuredeploy.net/deploybutton.png"/>
